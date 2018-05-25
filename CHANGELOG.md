@@ -1,9 +1,22 @@
 ## 6.0.0 (YYYY-MM-DD)
 
+The feature previously named Partial Sync is now called Query-Based Sync and is now the default mode when synchronizing Realms.
+This has impacted a number of API's. See below for the details.
+
 ### Breaking Changes
 
-* [ObjectServer] Partial sync is now the default mode of synchronization. `SyncConfiguration.Builder.partialRealm()` has been replaced by `SyncConfiguration.Builder.fullSynchronization()`.
-* [ObjectServer] `SyncConfiguration.isPartialRealm()` has been replaced by `SyncConfiguration.isFullySynchronizedRealm()`.
+* [ObjectServer] `SyncConfiguration.automatic()` has been replaced by `SyncUser.getDefaultConfiguration()`.
+
+### Deprecated
+
+* [ObjectServer] `new SyncConfiguration.Builder(user, url)` has been deprecated in favour of `SyncUser.createConfiguration(url)`. NOTE: The Builder constructors sync mode is still full synchronization while the new `createConfiguration()` uses query-based sync as the default mode.
+* [ObjectServer] `SyncConfiguration.Builder.partialRealm()` has been deprecated in favor of `SyncConfiguration.Builder.fullSynchronization()`.
+* [ObjectServer] `SyncConfiguration.isPartialRealm()` has been deprecated in favor of `SyncConfiguration.isFullySynchronizedRealm()`.
+
+### Enhancements
+
+* [ObjectServer] Added `SyncUser.createConfiguration(url)`. Realms created this way are query-based Realms by default.
+* [ObjectServer] Added `SyncUser.getDefaultConfiguration()`.
 
 
 ## 5.1.1 (YYYY-MM-DD)
