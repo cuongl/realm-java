@@ -392,7 +392,7 @@ public class SyncConfiguration extends RealmConfiguration {
      *
      * @return {@code true} to open a partial synchronization Realm {@code false} otherwise.
      * @see Builder#partialRealm() for more details.
-     * @Deprecated Use {@link #isFullySynchronizedRealm()} instead.
+     * @deprecated use {@link #isFullySynchronizedRealm()} instead.
      */
     @Deprecated
     public boolean isPartialRealm() {
@@ -914,7 +914,7 @@ public class SyncConfiguration extends RealmConfiguration {
          * Setting this will open a partially synchronized Realm.
          *
          * @see #isPartialRealm()
-         * @Deprecated Use {@link SyncUser#createConfiguration(String)} instead.
+         * @deprecated Use {@link SyncUser#createConfiguration(String)} instead.
          */
         @Deprecated
         public SyncConfiguration.Builder partialRealm() {
