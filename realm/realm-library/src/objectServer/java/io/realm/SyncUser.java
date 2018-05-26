@@ -245,7 +245,7 @@ public class SyncUser {
         if (!isValid()) {
             throw new IllegalStateException("Configurations can only be created from valid users");
         }
-        return new SyncConfiguration.Builder(this, uri);
+        return new SyncConfiguration.Builder(this, uri).partialRealm();
     }
 
     /**
@@ -260,7 +260,9 @@ public class SyncUser {
             throw new IllegalStateException("The default configuration can only be created for users that are logged in.");
         }
         if (defaultConfiguration == null) {
-            defaultConfiguration = new SyncConfiguration.Builder(this, createUrl(this)).build();
+            defaultConfiguration = new SyncConfiguration.Builder(this, createUrl(this))
+                    .partialRealm()
+                    .build();
         }
         return defaultConfiguration;
     }
