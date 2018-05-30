@@ -247,7 +247,7 @@ public class SyncConfiguration extends RealmConfiguration {
         if (user == null) {
             throw new IllegalStateException("No user was logged in.");
         }
-        return return user.getDefaultConfiguration();
+        return user.getDefaultConfiguration();
     }
 
     /**
