@@ -233,7 +233,7 @@ public class SyncUser {
      * <p>
      * Many Android devices are using FAT32 file systems. FAT32 file systems have a limitation that
      * file names cannot be longer than 255 characters. Moreover, the entire URI should not exceed 256 characters.
-     * If file name and underlying path are too long to handle for FAT32, a shorter unique name will be generated.
+     * If the file name and underlying path are too long to handle for FAT32, a shorter unique name will be generated.
      * See also @{link https://msdn.microsoft.com/en-us/library/aa365247(VS.85).aspx}.
      *
      * @param uri URI identifying the Realm. If only a path like {@code /~/default} is given, the configuration will
@@ -249,8 +249,8 @@ public class SyncUser {
     }
 
     /**
-     * Returns the default configuration for this user. The default configurations points to the
-     * default query-based Realm on the server the user authenticated.
+     * Returns the default configuration for this user. The default configuration points to the
+     * default query-based Realm on the server the user authenticated against.
      *
      * @return the default configuration for this user.
      * @throws IllegalStateException if the user isn't valid. See {@link #isValid()}.

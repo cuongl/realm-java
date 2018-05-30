@@ -33,6 +33,7 @@ import java.util.regex.Pattern;
 
 import javax.annotation.Nullable;
 
+import io.reactivex.annotations.Beta;
 import io.realm.annotations.RealmModule;
 import io.realm.exceptions.RealmException;
 import io.realm.internal.OsRealmConfig;
@@ -228,6 +229,49 @@ public class SyncConfiguration extends RealmConfiguration {
         }
     }
 
+    /**
+     * Creates an automatic default configuration based on the the currently logged in user.
+     * <p>
+     * This configuration will point to the default Realm on the server where the user was
+     * authenticated.
+     *
+     * @throws IllegalStateException if no user are logged in, or multiple users have. Only one should
+     * be logged in when calling this method.
+     * @return The constructed {@link SyncConfiguration}.
+     * @deprecated use {@link SyncUser#getDefaultConfiguration()} instead.
+     */
+    @Deprecated
+    @Beta
+    public static SyncConfiguration automatic() {
+        SyncUser user = SyncUser.current();
+        if (user == null) {
+            throw new IllegalStateException("No user was logged in.");
+        }
+        return return user.getDefaultConfiguration();
+    }
+
+    /**
+     * Creates an automatic default configuration for the provided user.
+     * <p>
+     * This configuration will point to the default Realm on the server where the user was
+     * authenticated.
+     *
+     * @throws IllegalArgumentException if no user was provided or the user isn't valid.
+     * @return The constructed {@link SyncConfiguration}.
+     * @deprecated use {@link SyncUser#getDefaultConfiguration()} instead.
+     */
+    @Deprecated
+    @Beta
+    public static SyncConfiguration automatic(SyncUser user) {
+        if (user == null) {
+            throw new IllegalArgumentException("Non-null 'user' required.");
+        }
+        if (!user.isValid()) {
+            throw new IllegalArgumentException("User is no logger valid.  Log the user in again.");
+        }
+        return user.getDefaultConfiguration();
+    }
+
     // Extract the full server path, minus the file name
     private static String getServerPath(URI serverUrl) {
         String path = serverUrl.getPath();
@@ -390,8 +434,7 @@ public class SyncConfiguration extends RealmConfiguration {
      * Query-based synchronization allows a synchronized Realm to be opened in such a way that
      * only objects queried by the user are synchronized to the device.
      *
-     * @return {@code true} to open a partial synchronization Realm {@code false} otherwise.
-     * @see Builder#partialRealm() for more details.
+     * @return {@code true} to open a query-based Realm {@code false} otherwise.
      * @deprecated use {@link #isFullySynchronizedRealm()} instead.
      */
     @Deprecated
@@ -476,7 +519,7 @@ public class SyncConfiguration extends RealmConfiguration {
         @Deprecated
         public Builder(SyncUser user, String uri) {
             this(BaseRealm.applicationContext, user, uri);
-            fullSynchronization(); //
+            fullSynchronization();
         }
 
         Builder(Context context, SyncUser user, String url) {
@@ -911,7 +954,7 @@ public class SyncConfiguration extends RealmConfiguration {
         }
 
         /**
-         * Setting this will open a partially synchronized Realm.
+         * Setting this will open a query-based Realm.
          *
          * @see #isPartialRealm()
          * @deprecated Use {@link SyncUser#createConfiguration(String)} instead.

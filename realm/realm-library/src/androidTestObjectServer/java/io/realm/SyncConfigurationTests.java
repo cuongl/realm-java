@@ -76,6 +76,20 @@ public class SyncConfigurationTests {
     }
 
     @Test
+    public void user_invalidUserThrows() {
+        try {
+            new SyncConfiguration.Builder(null, "realm://ros.realm.io/default");
+        } catch (IllegalArgumentException ignore) {
+        }
+
+        SyncUser user = createTestUser(0); // Create user that has expired credentials
+        try {
+            new SyncConfiguration.Builder(user, "realm://ros.realm.io/default");
+        } catch (IllegalArgumentException ignore) {
+        }
+    }
+
+    @Test
     public void serverUrl_setsFolderAndFileName() {
         SyncUser user = createTestUser();
         String identity = user.getIdentity();
